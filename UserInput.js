@@ -16,36 +16,30 @@ let questions = [{
 inquirer.prompt(questions).then(answers => {
     // console.log(`${answers['team']}`);
     // console.log(`${answers['name']}`)
-    let teamURL = '';
     let team = answers.team;
     let player = answers.name;
 
-    setTeamURL(team)
-    setTimeout(function () {
-        if (this.teamURL !== '') {
-            console.log(this.teamURL + 'finally got it');
-        }
-    }, 3500)
+    setTeamURL(team).then((result) => {
+        console.log(result + 'finally got it');
+    })
+
 
     //scrape.scrapePlayer(scrape.scrapeTeam(team), player);
 
 })
 
-function setTeamURL(team) {
-    let scrape = new Scrape();
-    this.teamURL = scrape.scrapeTeam(team);
-    // return new Promise(async (resolve, reject) => {
-    //     let scrape = new Scrape();
-    //     teamURL = await scrape.scrapeTeam(team);
+var setTeamURL = function (team) {
+    return new Promise((resolve, reject) => {
+        let scrape = new Scrape();
+        let teamURL = scrape.scrapeTeam(team);
+        if (teamURL !== null) {
+            console.log(teamURL + 'wait wait wait ok hm')
+            resolve(teamURL);
+        } else {
+            reject();
+        }
 
-    //     if (teamURL !== '') {
-    //         console.log(teamURL + 'wait wait wait hm')
-    //         resolve("passed");
-    //     } else {
-    //         reject();
-    //     }
-
-    // })
+    })
 }
 
 

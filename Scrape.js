@@ -1,6 +1,6 @@
 const request = require("request");
 const cheerio = require("cheerio");
-//video tutorial: 15:08
+
 
 var props = {
     teamURL: ''
@@ -11,29 +11,18 @@ function Scrape() {
 }
 
 //EFFECTS: given name of a team, return the href of the team on espn.com/nba/players
-Scrape.prototype.scrapeTeam = async function (team) {
-    setURL(team);
-    setTimeout(function () {
-        if (props.teamURL !== '') {
-            console.log(props.teamURL + 'nigette');
-            return props.teamURL;
+Scrape.prototype.scrapeTeam = function (team) {
+    setURL(team).then((result) => {
+        if (result !== '') {
+            console.log(result + 'pls work');
+            return result;
         }
-    }, 3000)
+    })
 
 }
 
-// .then(() => {
-//     if (props.teamURL !== '') {
-//         console.log(props.teamURL + "niggette")
-//         return props.teamURL;
-//     } else {
-//         console.log(team + ' was not found. Please try again');
-//     }
-
-// })
-
 // sets the playerURL to the team requested
-function setURL(team) {
+var setURL = function (team) {
     return new Promise((resolve, reject) => {
         request('http://www.espn.com/nba/players', (error, response, html) => {
             if (!error && response.statusCode == 200) {
@@ -47,6 +36,7 @@ function setURL(team) {
                             .children('a')
                             .attr('href');
                         props.teamURL = 'https://www.espn.com' + output;
+                        resolve(props.teamURL);
                         console.log(props.teamURL);
 
                     }
@@ -55,7 +45,6 @@ function setURL(team) {
                 console.log('An error has occurred with espn.com/nba/players');
                 reject();
             }
-            resolve();
         });
     })
 
