@@ -2,6 +2,7 @@ const request = require("request");
 const cheerio = require("cheerio");
 
 
+
 var props = {
     teamURL: ''
 }
@@ -18,6 +19,7 @@ Scrape.prototype.scrapeTeam = function (team) {
             return result;
         }
     })
+
 
 }
 

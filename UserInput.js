@@ -1,6 +1,7 @@
 
-const Scrape = require('./Scrape.js');
-const inquirer = require('inquirer')
+const Scraper = require('./Scraper.js');
+const inquirer = require('inquirer');
+const fs = require("fs");
 
 
 let questions = [{
@@ -13,34 +14,58 @@ let questions = [{
     message: "Enter your favorite player's first and last name (e.g. Derrick Rose)",
 }]
 
-inquirer.prompt(questions).then(answers => {
-    // console.log(`${answers['team']}`);
-    // console.log(`${answers['name']}`)
+inquirer.prompt(questions).then((answers) => {
+
     let team = answers.team;
     let player = answers.name;
 
-    setTeamURL(team).then((result) => {
-        console.log(result + 'finally got it');
-    })
+    let scraper = new Scraper();
+    scraper.scrapeTeamURL(team);
+    let teamURL = '';
+    setTimeout(() => {
+        teamURL = fs.readFileSync('teamlink.txt', 'utf8');
+        console.log('team URL obtained: ' + teamURL);
+        scraper.scrapePlayer(teamURL, player);
+        setTimeout(() => {
+            playerURL = fs.readFileSync('playerlink.txt', 'utf8');
+            console.log('player URL obtained: ' + playerURL)
+        }, 1500);
 
-
-    //scrape.scrapePlayer(scrape.scrapeTeam(team), player);
+    }, 1000)
 
 })
 
-var setTeamURL = function (team) {
-    return new Promise((resolve, reject) => {
-        let scrape = new Scrape();
-        let teamURL = scrape.scrapeTeam(team);
-        if (teamURL !== null) {
-            console.log(teamURL + 'wait wait wait ok hm')
-            resolve(teamURL);
-        } else {
-            reject();
-        }
 
-    })
-}
+
+
+
+
+
+
+
+
+
+// console.log(`${answers['team']}`);
+    // console.log(`${answers['name']}`)
+
+
+
+
+
+// var setTeamURL = function (team) {
+
+//     return new Promise((resolve, reject) => {
+//         let scrape = new Scrape();
+//         scrape.scrapeTeam();
+//         if (teamURL !== null) {
+//             console.log(teamURL + 'wait wait wait ok hm')
+//             resolve(teamURL);
+//         } else {
+//             reject();
+//         }
+
+//     })
+// }
 
 
 // const readline = require('readline');
