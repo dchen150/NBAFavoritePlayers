@@ -23,15 +23,22 @@ inquirer.prompt(questions).then((answers) => {
     scraper.scrapeTeamURL(team);
     let teamURL = '';
     setTimeout(() => {
-        teamURL = fs.readFileSync('teamlink.txt', 'utf8');
-        console.log('team URL obtained: ' + teamURL);
-        scraper.scrapePlayer(teamURL, player);
+        teamURL = fs.readFileSync('./textfiles/teamlink.txt', 'utf8');
+        console.log('team URL obtained: ' + teamURL + '\n');
+        scraper.scrapePlayerURL(teamURL, player);
         setTimeout(() => {
-            playerURL = fs.readFileSync('playerlink.txt', 'utf8');
-            console.log('player URL obtained: ' + playerURL)
-        }, 1500);
-
+            playerURL = fs.readFileSync('./textfiles/playerlink.txt', 'utf8');
+            console.log('player URL obtained: ' + playerURL + '\n');
+            scraper.scrapePlayerGameLog(playerURL);
+            setTimeout(() => {
+                playerGameLogURL = fs.readFileSync('./textfiles/playerlink.txt', 'utf8');
+                setTimeout(() => {
+                    scraper.scrapePlayerStats(playerGameLogURL);
+                }, 2000)
+            }, 1300)
+        }, 1000);
     }, 1000)
+
 
 })
 
