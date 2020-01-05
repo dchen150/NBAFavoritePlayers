@@ -4,7 +4,7 @@ const fs = require("fs");
 const writeStream = fs.createWriteStream('./textfiles/stats.csv')
 
 // Write CSV headers
-writeStream.write(`Date, Opposition, Minutes, FieldGoal%, ThreePoint%, FreeThrow%, Rebounds, Assists, Blocks, Steals, PersonalFouls, TurnOvers, Points \n`);
+writeStream.write(`Date,Opposition,Minutes,FieldGoal%,ThreePoint%,FreeThrow%,Rebounds,Assists,Blocks,Steals,PersonalFouls,TurnOvers,Points\n`);
 
 function Scraper() {
 
@@ -124,7 +124,7 @@ function Scraper() {
                         const personalFouls = steals.next();
                         const turnOvers = personalFouls.next();
                         const points = turnOvers.next();
-                        writeStream.write(`${date.text()}, ${opposition.text()}, ${minutes.text()}, ${fieldGoal.text()}, ${threePoint.text()}, ${freeThrow.text()}, ${rebounds.text()}, ${assists.text()}, ${blocks.text()}, ${steals.text()}, ${personalFouls.text()}, ${turnOvers.text()}, ${points.text()} \n`);
+                        writeStream.write(`${date.text()},${opposition.text()},${minutes.text()},${fieldGoal.text()},${threePoint.text()},${freeThrow.text()},${rebounds.text()},${assists.text()},${blocks.text()},${steals.text()},${personalFouls.text()},${turnOvers.text()},${points.text()}\n`);
                     }
 
                 })
