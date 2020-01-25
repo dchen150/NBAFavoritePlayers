@@ -15,3 +15,9 @@ select specific stats to look at instead of overlaying stats.
 
 tldr: JavaScript, Node.js (asynchronous functions), request.js, cheerio.js, chart.js, HTTPS
 
+# How to use
+1. get to src file in the project through cmd or git bash
+2. type: node userinput.js
+3. answer the prompted questions
+4. data will be loaded into stats.csv
+5. type "live-server" in vscode terminal and a browser with graphing should appear!
